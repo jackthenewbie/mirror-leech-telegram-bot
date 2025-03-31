@@ -14,7 +14,3 @@ list_drives.txt
 cookies.txt
 downloads/*
 *.session
-\#*
-config*
-*.pyc
-docker-compose.yml
