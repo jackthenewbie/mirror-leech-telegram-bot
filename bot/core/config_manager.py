@@ -30,6 +30,9 @@ class Config:
     QUEUE_ALL = 0
     QUEUE_DOWNLOAD = 0
     QUEUE_UPLOAD = 0
+    QBITTORRENT_URL = "http://localhost:8090/api/v2/"
+    QBITTORRENT_USERNAME = "mltb"
+    QBITTORRENT_PASSWORD = "mltbmltb"
     RCLONE_FLAGS = ""
     RCLONE_PATH = ""
     RCLONE_SERVE_URL = ""

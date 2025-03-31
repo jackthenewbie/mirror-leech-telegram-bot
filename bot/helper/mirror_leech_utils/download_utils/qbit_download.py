@@ -1,4 +1,4 @@
-from aiofiles.os import remove, path as aiopath
+from aiofiles.os import remove, path as aiopath, makedirs
 from aiofiles import open as aiopen
 from asyncio import sleep, TimeoutError
 from aioqbt.api import AddFormBuilder
@@ -44,6 +44,10 @@ def _get_hash_file(fpath):
 
 async def add_qb_torrent(listener, path, ratio, seed_time):
     try:
+        if not await aiopath.exists(path):
+            await makedirs(path, exist_ok=True)  # Use makedirs with exist_ok
+            LOGGER.info("Path must exist to download: %s", path)
+            
         form = AddFormBuilder.with_client(TorrentManager.qbittorrent)
         if await aiopath.exists(listener.link):
             async with aiopen(listener.link, "rb") as f:

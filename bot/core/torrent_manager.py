@@ -12,7 +12,7 @@ from tenacity import (
 )
 
 from .. import LOGGER, aria2_options
-
+from .config_manager import Config
 
 def wrap_with_retry(obj, max_retries=3):
     for attr_name in dir(obj):
@@ -41,7 +41,11 @@ class TorrentManager:
     async def initiate(cls):
         cls.aria2, cls.qbittorrent = await gather(
             Aria2WebsocketClient.new("http://localhost:6800/jsonrpc"),
-            create_client("http://localhost:8090/api/v2/"),
+            create_client(
+                str(Config.QBITTORRENT_URL),
+                username=str(Config.QBITTORRENT_USERNAME),
+                password=str(Config.QBITTORRENT_PASSWORD) 
+            )
         )
         cls.qbittorrent = wrap_with_retry(cls.qbittorrent)
 
