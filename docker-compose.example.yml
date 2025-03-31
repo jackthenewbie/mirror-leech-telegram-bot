@@ -1,0 +1,12 @@
+services:
+  app:
+    build: .
+    working_dir: /usr/src/app
+    command: bash start.sh
+    restart: on-failure
+    network_mode: "host"
+    volumes:
+      - ./bot:/usr/src/app/bot:rw
+      #Ensure that the /usr/src/app/downloads path matches the qBittorrent default save path if modified
+      #Otherwise leave /usr/src/app/downloads as is
+      #- /path/to/qbittorrent/downloads/location:/usr/src/app/downloads:rw

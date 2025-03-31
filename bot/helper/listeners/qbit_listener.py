@@ -121,6 +121,7 @@ async def _qb_listener():
                     if tag not in qb_torrents:
                         continue
                     state = tor_info.state
+                    LOGGER.debug(f"State: {state} - Hash: {tor_info.hash} - Name: {tor_info.name}")
                     if state == "metaDL":
                         qb_torrents[tag]["stalled_time"] = time()
                         if (
@@ -173,7 +174,7 @@ async def _qb_listener():
                         int(tor_info.completion_on.timestamp()) != -1
                         and not qb_torrents[tag]["uploaded"]
                         and state
-                        not in ["checkingUP", "checkingDL", "checkingResumeData"]
+                        not in ["queuedDL", "checkingUP", "checkingDL", "checkingResumeData"]
                     ):
                         qb_torrents[tag]["uploaded"] = True
                         await _on_download_complete(tor_info)

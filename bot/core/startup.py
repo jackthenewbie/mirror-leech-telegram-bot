@@ -33,9 +33,11 @@ async def update_qb_options():
         for k in list(qbit_options.keys()):
             if k.startswith("rss"):
                 del qbit_options[k]
-        qbit_options["web_ui_password"] = "mltbmltb"
+        qbit_options["web_ui_domain"] = Config.QBITTORRENT_URL
+        qbit_options["web_ui_password"] = str(Config.QBITTORRENT_PASSWORD)
+        qbit_options["web_ui_username"] = str(Config.QBITTORRENT_USERNAME)
         await TorrentManager.qbittorrent.app.set_preferences(
-            {"web_ui_password": "mltbmltb"}
+            {"web_ui_password": str(qbit_options["web_ui_password"])}
         )
     else:
         await TorrentManager.qbittorrent.app.set_preferences(qbit_options)
@@ -234,7 +236,7 @@ async def load_configurations():
 
     await (
         await create_subprocess_shell(
-            "chmod 600 .netrc && cp .netrc /root/.netrc && chmod +x aria-nox-nzb.sh && ./aria-nox-nzb.sh"
+            "chmod 600 .netrc && cp .netrc /root/.netrc && chmod +x ./*.sh && ./aria-nox-nzb.sh"
         )
     ).wait()
 

@@ -11,7 +11,7 @@ from sabnzbdapi import SabnzbdClient
 from aioaria2 import Aria2HttpClient
 from aioqbt.client import create_client
 from aiohttp.client_exceptions import ClientError
-
+from .. import config 
 from web.nodes import extract_file_ids, make_tree
 
 getLogger("httpx").setLevel(WARNING)
@@ -30,7 +30,9 @@ sabnzbd_client = SabnzbdClient(
 async def lifespan(app: FastAPI):
     global aria2, qbittorrent
     aria2 = Aria2HttpClient("http://localhost:6800/jsonrpc")
-    qbittorrent = await create_client("http://localhost:8090/api/v2/")
+    qbittorrent = await create_client(config.QBITTORRENT_URL, 
+                                    username=config.QBITTORRENT_USERNAME,
+                                    password=config.QBITTORRENT_PASSWORD)
     yield
     await aria2.close()
     await qbittorrent.close()
