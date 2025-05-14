@@ -1,4 +1,4 @@
-FROM anasty17/mltb:latest
+FROM mirror-bot:local
 
 WORKDIR /usr/src/app
 RUN chmod 777 /usr/src/app

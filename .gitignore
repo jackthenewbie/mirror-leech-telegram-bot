@@ -18,3 +18,4 @@ downloads/*
 config*
 *.pyc
 docker-compose.yml
+credentials.json
